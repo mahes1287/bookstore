@@ -37,6 +37,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #3rd party apps
+    # DRF
+    'rest_framework',
+
+    # API docs
+    'drf_yasg',
+
+    # CORS
+    'corsheaders',
+
+    # Countries
+    'django_countries',
+
+    #bookstore apps
+
 ]
 
 MIDDLEWARE = [
