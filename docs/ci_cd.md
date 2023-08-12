@@ -133,7 +133,7 @@ volumes:
 - Start dev server with `docker compose up -d`
 - List running containers with `docker ps`
 - Inspect running backend container with `docker exec -ti <containerid> bash`
-- Shut down dev server with `docker compuse down -d`
+- Shut down dev server with `docker compose down -d`
 
 ## 2. Set up server (e.g. DigitalOcean droplet)
 
