@@ -16,8 +16,8 @@ RUN chmod +x /scripts
 
 RUN /opt/conda/bin/conda env create -f /backend/requirements.yml
 
-ENV PATH /opt/conda/envs/fairq/bin:$PATH
-RUN echo "source activate fairq" >~/.bashrc
+ENV PATH /opt/conda/envs/bookstore/bin:$PATH
+RUN echo "source activate bookstore" >~/.bashrc
 
 WORKDIR /frontend
 COPY ./frontend/package.json /frontend/
