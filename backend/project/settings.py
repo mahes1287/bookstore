@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    #3rd party apps
+    # 3rd party apps
     # DRF
     'rest_framework',
 
@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     # Countries
     'django_countries',
 
-    #bookstore apps
+    # bookstore apps
+    'user',
 
 ]
 
@@ -137,6 +138,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# custom user model
+AUTH_USER_MODEL = 'user.AuthUser'
 
 # DOCUMENTATION
 SWAGGER_SETTINGS = {

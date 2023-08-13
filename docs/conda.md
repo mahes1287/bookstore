@@ -9,6 +9,13 @@ go with local venv solution: to avoid memory consuming conda env
 
 `source /home/lightwarrior/venvbox/bookstore/bin/activate`
 
+### in vscode set the python environment : set the path
+
+in `python.defaultInterpreterPath` : File>preferances> settings or ctrl+,
+`/home/lightwarrior/venvbox/bookstore/bin/python`
+
+another solution is create the venv folder in project directory and exclude that folder from .gitignore
+
 ### whenever want to install packages from requirements.yml
 
 install the dependancy first `pip3 install pyyaml`
