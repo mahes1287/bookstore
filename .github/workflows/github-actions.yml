@@ -16,7 +16,7 @@ on:
 #2
 env:
   REGISTRY: "registry.digitalocean.com/bookstore-container"
-  IMAGE_NAME: "your-docker-image-name"
+  IMAGE_NAME: "bookstore"
 
 #3
 jobs:
