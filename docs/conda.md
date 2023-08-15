@@ -21,3 +21,12 @@ another solution is create the venv folder in project directory and exclude that
 install the dependancy first `pip3 install pyyaml`
 
 python dev-install-packages.py
+
+### github action
+
+1. droplet ip
+2. geenerate ssh-keygen
+3. note down the passphrase
+4. get ssh private key
+5. username
+   above all for github actions
