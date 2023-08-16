@@ -60,4 +60,4 @@ jobs:
             docker run -d \
             --restart always \
             --name $(echo $IMAGE_NAME) \
-            $(echo $REGISTRY)/$(echo $IMAGE_NAME)::latest)
+            $(echo $REGISTRY)/$(echo $IMAGE_NAME):latest
