@@ -4,6 +4,7 @@ Step-by-step manual how to set up CI / CD with Docker and Gitlab CI.
 
 Contents:
 
+
 1. Dockerize Django app and PostgreSQL
 2. Set up server (e.g. DigitalOcean droplet)
 3. Deploy backend to droplet
@@ -129,11 +130,11 @@ volumes:
 
 ### Build image and start dev server
 
-- Build image with `docker build -t bookstore:latest .`
-- Start dev server with `docker compose up -d`
-- List running containers with `docker ps`
-- Inspect running backend container with `docker exec -ti <containerid> bash`
-- Shut down dev server with `docker compose down -d`
+* Build image with `docker build -t bookstore:latest .`
+* Start dev server with `docker compose up -d`
+* List running containers with `docker ps`
+* Inspect running backend container with `docker exec -ti <containerid> bash`
+* Shut down dev server with `docker compose down -d`
 
 ## 2. Set up server (e.g. DigitalOcean droplet)
 
@@ -143,8 +144,8 @@ e.g. DigitalOcean: 2 GB Memory / 50 GB Disk / FRA1 - Ubuntu 22.04 (LTS) x64
 
 ### SSH into droplet
 
-- Connect with `ssh root@<ipv4>`
-- (optional) install digital ocean droplet console agent to access from Browser Dashboard
+* Connect with `ssh root@<ipv4>`
+* (optional) install digital ocean droplet console agent to access from Browser Dashboard
 
 ```javascript
 wget -qO- https://repos-droplet.digitalocean.com/install.sh | sudo bash
@@ -162,10 +163,10 @@ sudo usermod -aG sudo <username>
 ```bash
 mkdir -p /home/<username>/.ssh
 cp /root/.ssh/authorized_keys /home/<username>/.ssh/authorized_keys
-rsync --archive --chown=<username>:<username> ~/.ssh/home/<username>
 
-# last line i modified like this
-rsync --archive --chown=mahesh:mahesh /home/mahesh/.ssh
+
+# User Home Directory Ownership:
+sudo chown -R <username>:<username> /home/<username>/.ssh
 ```
 
 #### Remove SSH root access
@@ -277,6 +278,32 @@ docker --version
 docker compose version
 ```
 
+### Setup github action
+
+
+1. Generate Digital ocean Access token , add it to github repository Actions
+
+DIGITALOCEAN_ACCESS_TOKEN
+
+2\. Add the droplet ipv4 in HOST - in github actions.
+
+3\. add the droplet USERNAME in github Actions
+
+4\. add the SSHKEY (ed25519 - private key) in the github actions. See the steps below to generate or add:
+
+These are appleboy recomened steps:
+Keys generated in your local machine.
+Generate the SSH key using ssh-keygen
+Incase if you are using the ubuntu and already generated the ssh key in your local machine. we can reuse it. we will skip the geenerate ed25519 step.
+Generate ed25519 key
+ssh-keygen -t ed25519 -a 200 -C "your_email@example.com"
+
+Add newly generated/ or existing ed25519 key into Authorized keys to the droplet
+cat .ssh/id_ed25519.pub | ssh <username>@<ipv4> 'cat >> .ssh/authorized_keys'
+
+Copy Private Key content of your local machine and paste in Github Secrets as SSHKEY
+cat \~/.ssh/id_ed25519
+
 ### Set up Gitlab Runner
 
 #### Download and install runner
@@ -288,12 +315,12 @@ sudo apt-get install gitlab-runner
 
 #### Register runner
 
-- Log in to Gitlab.com and open repository
-- Go to Settings > CI/CD > Runners
-- Get registration token
-- Register token with `sudo gitlab-runner register`
-- Enter details
-- Select "shell" as executor
+* Log in to Gitlab.com and open repository
+* Go to Settings > CI/CD > Runners
+* Get registration token
+* Register token with `sudo gitlab-runner register`
+* Enter details
+* Select "shell" as executor
 
 ### Add domain to droplet
 
@@ -552,15 +579,15 @@ volumes:
 
 Main differences to `docker-compose.yml`:
 
-- Instead of taking the local docker image, the latest master image is pulled from the registry
-- `prod.env` file is used in backend and postgres service
-- Backend service has no volume `/backend` mounted; there is no need to listen for changes on backend files on the prod server.
-- `prod.sh` script is executed on startup
-- Nginx service is used as a webserver
-  - Ports 80 (HTTP) and 443 (HTTPS) are open
-  - Static files and media files are mounted from docker volume
-  - `nginx` folder from repo is mounted into `/etc/nginx/conf.d`, which is where Nginx looks for `default.conf` files
-  - `/etc/letsencrypt` (from droplet) is mounted into `/etc/letsencrypt` of nginx container, so that the SSL certificate files are accessible for Nginx
+* Instead of taking the local docker image, the latest master image is pulled from the registry
+* `prod.env` file is used in backend and postgres service
+* Backend service has no volume `/backend` mounted; there is no need to listen for changes on backend files on the prod server.
+* `prod.sh` script is executed on startup
+* Nginx service is used as a webserver
+  * Ports 80 (HTTP) and 443 (HTTPS) are open
+  * Static files and media files are mounted from docker volume
+  * `nginx` folder from repo is mounted into `/etc/nginx/conf.d`, which is where Nginx looks for `default.conf` files
+  * `/etc/letsencrypt` (from droplet) is mounted into `/etc/letsencrypt` of nginx container, so that the SSL certificate files are accessible for Nginx
 
 ### Create a docker-compose file for linting
 
@@ -668,19 +695,19 @@ deploy:
 
 ### Deploy to Droplet and create Django superuser
 
-- Commit all changes and commit, push, and merge to master branch.
-- In Gitlab, go to CI/CD > Pipelines and check whether the pipeline is running
-- Start the last step "deploy" with a manual click
-- When the deployment succeeded, ssh to Droplet `ssh <username>@<ip>`
-- Run `docker ps` to see if all three services (backend, postgres, nginx) are running
-- If not, run `docker ps -a` to list all containers
-- Run `docker logs <container_id>` to inspect the containers that stopped due to an error
-- If all three services are running, check whether the Django admin can be accessed with the browser, via <domain>/backend/admin
-- If yes, go on and create a superuser:
-  - Run `docker exec -it <backend_container_id> bash`
-  - If `pwd` is `/backend`, run `python manage.py createsuperuser`
-  - Fill out all details required for a superuser
-- Try to log in to the Django admin UI with the superuser credentials
+* Commit all changes and commit, push, and merge to master branch.
+* In Gitlab, go to CI/CD > Pipelines and check whether the pipeline is running
+* Start the last step "deploy" with a manual click
+* When the deployment succeeded, ssh to Droplet `ssh <username>@<ip>`
+* Run `docker ps` to see if all three services (backend, postgres, nginx) are running
+* If not, run `docker ps -a` to list all containers
+* Run `docker logs <container_id>` to inspect the containers that stopped due to an error
+* If all three services are running, check whether the Django admin can be accessed with the browser, via <domain>/backend/admin
+* If yes, go on and create a superuser:
+  * Run `docker exec -it <backend_container_id> bash`
+  * If `pwd` is `/backend`, run `python manage.py createsuperuser`
+  * Fill out all details required for a superuser
+* Try to log in to the Django admin UI with the superuser credentials
 
 ## 4. Deploy frontend to droplet
 
@@ -807,15 +834,15 @@ export const api = axios.create({
 
 ### Deploy changes to Droplet and perform frontend checks
 
-- Commit all changes and commit, push, and merge to master branch.
-- In Gitlab, go to CI/CD > Pipelines and check whether the pipeline is running
-- Start the last step "deploy" with a manual click
-- When the deployment succeeded, ssh to Droplet `ssh <username>@<ip>`
-- Run `docker ps` to see if all three services (backend, postgres, nginx) are running
-- If not, run `docker ps -a` to list all containers
-- Run `docker logs <container_id>` to inspect the containers that stopped due to an error
-- If all three services are running, check whether the frontend can be accessed with the browser, via <domain>/
-- If yes, try to log in with the superuser
+* Commit all changes and commit, push, and merge to master branch.
+* In Gitlab, go to CI/CD > Pipelines and check whether the pipeline is running
+* Start the last step "deploy" with a manual click
+* When the deployment succeeded, ssh to Droplet `ssh <username>@<ip>`
+* Run `docker ps` to see if all three services (backend, postgres, nginx) are running
+* If not, run `docker ps -a` to list all containers
+* Run `docker logs <container_id>` to inspect the containers that stopped due to an error
+* If all three services are running, check whether the frontend can be accessed with the browser, via <domain>/
+* If yes, try to log in with the superuser
 
 ### Update gitlab-ci pipeline to remove old build volume
 
@@ -846,26 +873,28 @@ Ensure the command to remove the docker volume happens between `docker compose .
 
 ### Set up Docker and Python interpreter
 
+
 1. Open PyCharm; go to Settings > Build, Execution, Deployment > Docker
 2. Add new instance
 3. Configure paths:
 
+   
    1. Virtual machine path: `/backend`
    2. Local path: `<local path to repo>/backend`
-
 4. Apply
 5. As Python interpreter, select conda env from newly created Docker
 6. Go to „Edit configurations“
 7. Add new configurations for `makemigrations`, `migrate`, `runserver`
 
+   
    1. Script path: `/backend/manage.py`
    2. Parameters: e.g. `runserver 0:8000`
    3. Python interpreter: Select remote interpreter from docker compose
-
 8. Make and run migrations to ensure database is updated.
 9. Start the development server
 
 ### Connect to PostgreSQL DB on Docker
+
 
 1. Open PyCharm, go to Database section (right-side bar)
 2. Add new connection and select PostgreSQL
