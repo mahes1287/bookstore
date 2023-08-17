@@ -5,3 +5,7 @@ from .models import AuthUser
 
 class AuthUserSerializer(serializers.ModelSerializer):
     pass
+
+
+class AuthUserSerializerjunk(serializers.ModelSerializer):
+    pass
