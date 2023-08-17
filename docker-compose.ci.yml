@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  backend:
+    image: $REGISTRY/$IMAGE_NAME:latest
+    # image: ghcr.io/mahes1287/bookstore
+    build:
+      context: .
+      dockerfile: Dockerfile.multistage
+    ports:
+      - "8001:8000"
+    env_file:
+      - ./envs/dev.env
+      # - ./envs/secrets.env
+    volumes:
+      - ./backend:/backend
+    command: "sh /scripts/dev.sh"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:alpine3.18
+    ports:
+      - "5555:5432"
+    env_file:
+      - ./envs/dev.env
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+
+volumes:
+  postgres_db:
