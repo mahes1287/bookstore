@@ -2,6 +2,9 @@ version: "3"
 
 services:
   backend:
+    build:
+      # context: /
+      dockerfile: Dockerfile
     image: bookstore:latest
     ports:
       - "8001:8000"
