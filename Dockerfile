@@ -8,7 +8,9 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install curl -y && \
     curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs
+    apt-get install -y nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 
 COPY ./backend/requirements.yml /backend/requirements.yml
