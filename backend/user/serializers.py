@@ -7,5 +7,5 @@ class AuthUserSerializer(serializers.ModelSerializer):
     pass
 
 
-class AuthUserSerializerjunk(serializers.ModelSerializer):
+class AuthUserSerializerjunk2(serializers.ModelSerializer):
     pass
