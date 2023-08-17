@@ -1,81 +1,64 @@
 # Exclude Git related files
-
 .git
 .gitignore
 
 # Exclude temporary and build files
-
 node_modules/
-**pycache**/
-_.pyc
-_.o
+**/__pycache__/
+*.pyc
+*.o
 
 # Exclude logs and debugging output
-
 logs/
 debug/
-\*.log
+*.log
 
 # Exclude development and IDE files
-
 .vscode/
 .idea/
 .DS_Store
 
 # Exclude documentation and test data
-
 docs/
 test_data/
 
 # Exclude configuration and secrets
-
 config/secrets.conf
 
 # Exclude large binary or media files
-
 images/
 videos/
 
 # Exclude localization or language files
-
 translations/
 locale/
 
 # Exclude any other non-essential files
-
 extra_files/
 
 # Exclude version control directories and files
-
-.git
-.gitignore
+# (Already excluded in the provided .dockerignore)
 
 # Exclude temporary and build-related files
-
-**pycache**/
-_.pyc
-_.pyo
-_.pyd
-_.db
-_.sqlite
-_.log
-_.swp
-.DS_Store
-_.bak
-_.tmp
-_.tmp.\*
-\*.pid
+# (Already excluded in the provided .dockerignore)
 
 # Exclude frontend build artifacts
-
 /frontend/dist
 
 # Exclude other unnecessary files and directories
+# Add additional entries here if needed
 
-node_modules/
-venv/
-.env
-_.env
-_.pyc
+# Exclude database files
+/backend/db.sqlite3
+
+# Exclude environment files
+/envs/
+
+# Exclude output files
+/out.txt
+
+# Exclude development and testing scripts
+/scripts/dev.sh
+/scripts/prod.sh
 
 # Add more exclusions as needed based on your project structure and requirements
