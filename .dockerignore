@@ -31,8 +31,6 @@ test_data/
 
 config/secrets.conf
 
-<!-- *.env -->
-
 # Exclude large binary or media files
 
 images/
@@ -46,3 +44,38 @@ locale/
 # Exclude any other non-essential files
 
 extra_files/
+
+# Exclude version control directories and files
+
+.git
+.gitignore
+
+# Exclude temporary and build-related files
+
+**pycache**/
+_.pyc
+_.pyo
+_.pyd
+_.db
+_.sqlite
+_.log
+_.swp
+.DS_Store
+_.bak
+_.tmp
+_.tmp.\*
+\*.pid
+
+# Exclude frontend build artifacts
+
+/frontend/dist
+
+# Exclude other unnecessary files and directories
+
+node_modules/
+venv/
+.env
+_.env
+_.pyc
+
+# Add more exclusions as needed based on your project structure and requirements
