@@ -2,10 +2,11 @@ version: "3"
 
 services:
   backend:
-    image: $REGISTRY/$IMAGE_NAME:latest
+    # image: $REGISTRY/$IMAGE_NAME:latest
+    image: ghcr.io/mahes1287/bookstore
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.multistage
     ports:
       - "8001:8000"
     env_file:
