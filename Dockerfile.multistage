@@ -1,0 +1,35 @@
+# Stage 1: Build frontend assets
+FROM node:16 AS frontend_builder
+
+WORKDIR /frontend
+COPY ./frontend/package.json /frontend/
+COPY ./frontend/package-lock.json /frontend/
+RUN npm install
+COPY ./frontend /frontend
+RUN npm run build
+
+# Stage 2: Build backend and final image
+FROM continuumio/miniconda3:23.3.1-0
+
+RUN mkdir -p /frontend
+RUN mkdir -p /backend
+RUN mkdir -p /scripts
+
+COPY ./backend/requirements.yml /backend/requirements.yml
+
+COPY ./scripts /scripts
+RUN chmod +x /scripts
+
+RUN /opt/conda/bin/conda env create -f /backend/requirements.yml
+
+ENV PATH /opt/conda/envs/bookstore/bin:$PATH
+RUN echo "source activate bookstore" >~/.bashrc
+
+# Copy frontend assets from the first stage
+COPY --from=frontend_builder /frontend/dist /frontend
+
+# Copy backend code
+WORKDIR /backend
+COPY ./backend /backend
+
+# Continue with other commands...
