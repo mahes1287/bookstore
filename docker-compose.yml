@@ -3,7 +3,7 @@ version: "3"
 services:
   backend:
     build:
-      # context: /
+      context: ./
       dockerfile: Dockerfile
     image: bookstore:latest
     ports:
