@@ -26,15 +26,14 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v3
 
-      - name: Login to GitHub Container Registry
-        run: echo ${{ secrets.GH_PAT }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-
       - name: Pull images
-        run: |
-          docker pull $REGISTRY/$IMAGE_NAME:latest || true
+        run: docker pull $REGISTRY/$IMAGE_NAME:latest || true
 
       - name: Build container image
         run: docker build -t $REGISTRY/$IMAGE_NAME:latest .
+
+      - name: Login to GitHub Container Registry
+        run: echo ${{ secrets.GH_PAT }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
       - name: Push image to GitHub Container Registry
         run: docker push $REGISTRY/$IMAGE_NAME:latest
