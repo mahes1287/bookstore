@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: bookstore:latest
+    image: $REGISTRY/$IMAGE_NAME:latest
     ports:
       - "8001:8000"
     env_file:
