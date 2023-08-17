@@ -7,7 +7,7 @@ services:
       - "8001:8000"
     env_file:
       - ./envs/dev.env
-      - ./envs/secrets.env
+      # - ./envs/secrets.env
     volumes:
       - ./backend:/backend
     command: "sh /scripts/dev.sh"
