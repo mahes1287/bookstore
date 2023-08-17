@@ -3,7 +3,7 @@ version: "3"
 services:
   backend:
     # image: $REGISTRY/$IMAGE_NAME:latest
-    image: ghcr.io/mahes1287/bookstore
+    image: ghcr.io/mahes1287/bookstore:latest
     build:
       context: .
       dockerfile: Dockerfile.multistage
