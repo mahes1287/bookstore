@@ -1,0 +1,48 @@
+# Exclude Git related files
+
+.git
+.gitignore
+
+# Exclude temporary and build files
+
+node_modules/
+**pycache**/
+_.pyc
+_.o
+
+# Exclude logs and debugging output
+
+logs/
+debug/
+\*.log
+
+# Exclude development and IDE files
+
+.vscode/
+.idea/
+.DS_Store
+
+# Exclude documentation and test data
+
+docs/
+test_data/
+
+# Exclude configuration and secrets
+
+config/secrets.conf
+
+<!-- *.env -->
+
+# Exclude large binary or media files
+
+images/
+videos/
+
+# Exclude localization or language files
+
+translations/
+locale/
+
+# Exclude any other non-essential files
+
+extra_files/
