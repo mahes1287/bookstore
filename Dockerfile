@@ -4,10 +4,12 @@ RUN mkdir -p /frontend
 RUN mkdir -p /backend
 RUN mkdir -p /scripts
 
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install curl -y
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install curl -y && \
+    curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
+
 
 COPY ./backend/requirements.yml /backend/requirements.yml
 
