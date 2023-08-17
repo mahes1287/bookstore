@@ -30,7 +30,8 @@ jobs:
         run: docker pull $REGISTRY/$IMAGE_NAME:latest || true
 
       - name: Build container image
-        run: docker build -t $REGISTRY/$IMAGE_NAME:latest .
+        # run: docker build -t $REGISTRY/$IMAGE_NAME:latest .
+        run: docker-compose -f docker-compose.yml build
 
       - name: Login to GitHub Container Registry
         run: echo ${{ secrets.GH_PAT }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
